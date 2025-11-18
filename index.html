@@ -333,7 +333,7 @@ function MyNavbar({ currentPage }) {
                             <a className="nav-link" href="#" onClick={() => window.setCurrentPage('home')}>Beranda</a>
                         </li>
                         
-                        <li className={`nav-item dropdown ${isLinkActive('visi-misi') || isLinkActive('sejarah') || isLinkActive('dosen') || isLinkActive('struktur') ? 'active' : ''}`}>
+                        <li className={`nav-item dropdown ${isLinkActive('visi-misi') || isLinkActive('sejarah') || isLinkActive('dosen') || isLinkActive('struktur') || isLinkActive('profil-lulusan') ? 'active' : ''}`}>
                             <a 
                                 className="nav-link dropdown-toggle" 
                                 href="#" 
@@ -352,25 +352,32 @@ function MyNavbar({ currentPage }) {
     <li><a className="dropdown-item" href="#" onClick={() => window.setCurrentPage('profil-lulusan')}>Profil Lulusan</a></li>
 </ul>
                         </li>
-                        <li className="nav-item dropdown">
-                            <a 
-                                className="nav-link dropdown-toggle" 
-                                href="#" 
-                                id="navbarDropdownAkademik" 
-                                role="button" 
-                                data-bs-toggle="dropdown" 
-                                aria-expanded="false"
-                                >
-                                    Akademik
-                            </a>
-                            <ul className="dropdown-menu" aria-labelledby="navbarDropdownAkademik">
+                        
+                        <li className={`nav-item dropdown ${isLinkActive('kurikulum') || isLinkActive('MataKuliah') || isLinkActive('mbkm') ? 'active' : ''}`}>
+                            <a 
+                                className="nav-link dropdown-toggle" 
+                                href="#" 
+                                id="navbarDropdownAkademik" 
+                                role="button" 
+                                data-bs-toggle="dropdown" 
+                                aria-expanded="false"
+                            >
+                                Akademik
+                            </a>
+                            <ul className="dropdown-menu" aria-labelledby="navbarDropdownAkademik">
                             <li><a className="dropdown-item" href="#" onClick={() => window.setCurrentPage('kurikulum')}>Kurikulum</a></li>
                             <li><a className="dropdown-item" href="#" onClick={() => window.setCurrentPage('MataKuliah')}>Mata Kuliah</a></li>
                              <li><a className="dropdown-item" href="#" onClick={() => window.setCurrentPage('mbkm')}>Program MBKM</a></li> 
                             </ul>
-                        </li>
-                        <li className="nav-item"><a className="nav-link" href="#" onClick={() => window.setCurrentPage('kemahasiswaan')}>Kemahasiswaan</a></li>
-                        <li className="nav-item"><a className="nav-link" href="#" onClick={() => window.setCurrentPage('fasilitas')}>Fasilitas</a></li>
+                        </li>
+                        
+                        <li className={`nav-item ${isLinkActive('kemahasiswaan')}`}>
+                            <a className="nav-link" href="#" onClick={() => window.setCurrentPage('kemahasiswaan')}>Kemahasiswaan</a>
+                        </li>
+                        
+                        <li className={`nav-item ${isLinkActive('fasilitas')}`}>
+                            <a className="nav-link" href="#" onClick={() => window.setCurrentPage('fasilitas')}>Fasilitas</a>
+                        </li>
                     </ul>
                     <a className="nav-link ms-3" href="#"><i className="fa-solid fa-search fa-lg" style={{ color: 'var(--untan-blue)' }}></i></a>
                 </div>
