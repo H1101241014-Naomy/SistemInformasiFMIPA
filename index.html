@@ -261,6 +261,48 @@
             border-radius: 2px;
         }
         
+        /* Tombol Scroll to Top */
+#scroll-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background-color: var(--untan-blue);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+#scroll-to-top.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+#scroll-to-top:hover {
+    background-color: var(--untan-orange);
+}
+
+/* Efek Kursor Akan Mentiktik */
+.cursor {
+    display: inline-block;
+    background-color: var(--untan-orange);
+    width: 3px;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
     </style>
 
     <script type="text/babel">
@@ -339,10 +381,25 @@ function MyNavbar({ currentPage }) {
 }
 
 function Hero() {
+    const fullText = "S1 Sistem Informasi";
+    const [displayedText, setDisplayedText] = React.useState('');
+    const [index, setIndex] = React.useState(0);
+
+    React.useEffect(() => {
+        if (index < fullText.length) {
+            const timeoutId = setTimeout(() => {
+                setDisplayedText(prevText => prevText + fullText.charAt(index));
+                setIndex(prevIndex => prevIndex + 1);
+            }, 100);
+
+            return () => clearTimeout(timeoutId);
+        }
+    }, [index, fullText]);
+
     return (
         <section className="hero" id="home-header">
             <div className="container">
-                <h1 className="display-6 fw-bold">S1 Sistem Informasi</h1>
+                <h1 className="display-6 fw-bold">{displayedText}<span className="cursor">|</span></h1>
                 <p className="lead">Fakultas Matematika dan Ilmu Pengetahuan Alam</p>
             </div>
         </section>
@@ -887,6 +944,42 @@ function HalamanProfilLulusan() {
     );
 }
 
+// ===== KOMPONEN TOMBOL SCROLL TO TOP =====
+function ScrollToTopButton() {
+    const [isVisible, setIsVisible] = React.useState(false);
+
+    React.useEffect(() => {
+        const toggleVisibility = () => {
+            if (window.pageYOffset > 300) {
+                setIsVisible(true);
+            } else {
+                setIsVisible(false);
+            }
+        };
+
+        window.addEventListener("scroll", toggleVisibility);
+
+        return () => window.removeEventListener("scroll", toggleVisibility);
+    }, []);
+
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    };
+
+    return (
+        <div
+            id="scroll-to-top"
+            className={isVisible ? "show" : ""}
+            onClick={scrollToTop}
+        >
+            <i className="fas fa-arrow-up"></i>
+        </div>
+    );
+}
+
 // ===== KOMPONEN UTAMA APP =====
 
 function App() {
@@ -940,12 +1033,12 @@ function App() {
     };
     return (
         <div>
-            {/* Teruskan currentPage sebagai prop agar Navbar bisa tahu link mana yang aktif */}
             <MyNavbar currentPage={currentPage} />
             
             {renderContent()} 
             
             <Footer />
+            <ScrollToTopButton />
         </div>
     );
 }
