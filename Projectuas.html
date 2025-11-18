@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prodi Sistem Informasi Universitas Tanjungpura</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        /* WARNA UTAMA */
+        :root {
+            --untan-blue: #0b1957;  
+        }
+        
+        /* 1. TOP NAVBAR */
+        .top-navbar {
+            background-color: #0d47a1;
+            color: white;
+            padding: 5px 0;
+            font-size: 0.9rem;
+        }
+        .top-navbar .nav-link {
+            color: white !important;
+            padding: 0.25rem 0.75rem;
+        }
+
+        /* 2. MAIN NAVBAR */
+        .navbar-custom {
+            background-color: white; /* Navbar utama putih/terang */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        .navbar-custom .nav-link {
+            color: var(--untan-blue) !important; /* Teks Biru Tua */
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+        }
+        .navbar-custom .dropdown-menu {
+        margin-top: 0px; /* Agar margin tidak berlebihan */
+        }
+        .navbar-custom .nav-link:hover {
+            color: var(--untan-orange) !important;
+        }
+        .navbar-custom .navbar-nav {
+        display: flex;
+        gap: 0;
+        align-items: center;
+        }
+        .navbar-custom .dropdown-toggle {
+         white-space: normal !important;  /* Ubah dari nowrap jadi normal */
+        }
+        .navbar-custom .nav-link {
+    color: var(--untan-blue) !important;
+    font-weight: 500;
+    padding: 0.5rem 1rem;  /* Spacing sudah diatur di sini */
+    }
+        /* Navbar Item Aktif (Contoh: Profil aktif di gambar) */
+        .navbar-custom .nav-item.active .nav-link {
+            background-color: var(--untan-blue);
+            color: white !important;
+        }
+        .navbar-custom .navbar-brand img {
+            height: 40px; 
+            margin-right: 10px;
+        }
+
+        /* 3. HERO / HEADER (Biru Tua Dominan dengan border Oranye) */
+        .hero {
+            background-color: var(--untan-blue); /* Warna solid biru tua */
+            background-image: none;
+            color: white; 
+            padding: 30px 0;
+            text-align: left;
+            /* Garis bawah oranye di bawah hero section */
+            border-bottom: 5px solid var(--untan-orange); 
+            position: relative;
+            overflow:hidden;
+        }
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://sisfo.untan.ac.id/wp-content/uploads/elementor/thumbs/taman--scaled-e1701674988141-qgb0raqron5dui5or8m437j7kwhsbdyf9ii7uzinjg.jpg');
+            background-size:cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.3; /* Transparansi gambar latar */
+            z-index: 1;
+        }
+
+        /* 4. Bagian Tentang SI: Kartu Tombol */
+        .tentang-si {
+            /* Warna latar belakang untuk Tentang SI (biru tua seperti hero) */
+            background-color: var(--untan-blue);
+            color: white;
+            padding: 50px 0;
+        }
+        .btn-primary-custom {
+            background-color: #e53935; /* Warna merah sesuai tombol Selengkapnya */
+            border-color: #e53935;
+        }
+        .btn-primary-custom:hover {
+            background-color: #c62828;
+            border-color: #c62828;
+        }
+        .card-custom {
+            background-color: white;
+            color: var(--untan-blue);
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        .card-custom:hover {
+            background-color: #eeeeee;
+        }
+        .card-custom span {
+            font-weight: bold;
+        }
+        .card-custom i {
+            color: var(--untan-orange); /* Panah oranye */
+        }
+
+        /* 5. FOOTER (Jika ingin warna biru tua juga) */
+        footer {
+            background-color: var(--untan-blue);
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 50px;
+        }
+
+        /* 6. STYLE TAMBAHAN */
+        .list-group-item:hover {
+            background-color: #f8f9fa;
+        }
+        .text-primary {
+            color: var(--untan-blue) !important;
+        }
+        .btn-outline-primary {
+            color: var(--untan-blue);
+            border-color: var(--untan-blue);
+        }
+        /* 7. STYLE UNTUK SAMBUTAN KAPRODI */
+        .sambutan-kaprodi {
+            background-color: #f8f9fa;
+            padding: 40px 0;
+        }
+        .sambutan-content {
+            background-color: #0d47a1;
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            height: 100%;
+        }
+        .kaprodi-img {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .sambutan-title {
+            color: white;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        /* 8. STYLE UNTUK SOCIAL MEDIA YANG DIPERBAIKI */
+        .social-media-section {
+            background-color: #f8f9fa;
+            padding: 60px 0;
+            border-top: 1px solid #e9ecef;
+        }
+        .social-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            border: none;
+            margin-bottom: 20px;
+            height: 100%;
+        }
+        .social-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+        }
+        .social-icon {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin-right: 15px;
+            font-size: 24px;
+            color: white;
+        }
+        .social-icon.facebook {
+            background-color: #1877f2;
+        }
+        .social-icon.instagram {
+            background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
+        }
+        .social-icon.youtube {
+            background-color: #ff0000;
+        }
+        .social-icon.email {
+            background-color: #ea4335;
+        }
+        .social-info {
+            flex-grow: 1;
+        }
+        .social-name {
+            font-weight: 600;
+            font-size: 18px;
+            margin-bottom: 5px;
+            color: var(--untan-blue);
+        }
+        .social-handle {
+            color: #6c757d;
+            font-size: 16px;
+        }
+        .social-link {
+            text-decoration: none;
+            color: inherit;
+        }
+        .social-link:hover {
+            text-decoration: none;
+        }
+        .social-link:hover .social-name {
+            color: var(--untan-orange);
+        }
+        .social-link:hover .social-handle {
+            color: #495057;
+        }
+        .section-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 40px;
+            position: relative;
+            padding-bottom: 15px;
+            color: var(--untan-blue);
+        }
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--untan-orange);
+            border-radius: 2px;
+        }
+        
+    </style>
+
+    <script type="text/babel">
+// ===================================
+// ===== KOMPONEN NAVBAR & HERO ======
+// ===================================
+function MyNavbar({ currentPage }) {
+    const logoUntanUrl = "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjAMo-RoaTtjDuXxkwIW67QARKKQtXhsCZHYx14imGaWRCFVj23crDQP5L588mCAu8GShFksh11m-MZRW05nukYPX2fuBBmqhosszU4xQDHTIpGLFWIlJvPf7DBaYiMix4mQ1M0c_mR-3nB/s2048/Logo-Untan-Universitas-Tanjungpura-PNG.png"; 
+    
+    // Fungsi untuk menentukan kelas aktif dan warna teks
+    const isLinkActive = (page) => currentPage === page ? 'active' : '';
+
+    return (
+        <>
+        <nav className="navbar navbar-expand-lg navbar-custom sticky-top">
+            <div className="container">
+               <a className="navbar-brand fw-bold d-flex align-items-center" href="#" onClick={() => window.setCurrentPage('home')}> 
+        <img src={logoUntanUrl} alt="Logo Untan" /> 
+     <span style={{ color: 'var(--untan-blue)', marginLeft: '10px' }}>Universitas Tanjungpura</span>
+        </a>
+                
+                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span className="navbar-toggler-icon"></span>
+                </button>
+                <div className="collapse navbar-collapse" id="navbarNav">
+                    <ul className="navbar-nav ms-auto">
+                        <li className={`nav-item ${isLinkActive('home')}`}>
+                            <a className="nav-link" href="#" onClick={() => window.setCurrentPage('home')}>Beranda</a>
+                        </li>
+                        {/* BARIS INI DIHAPUS <li className="nav-item"><a className="nav-link" href="#berita">Berita</a></li> */}
+                        
+                        <li className={`nav-item dropdown ${isLinkActive('visi-misi') || isLinkActive('sejarah') || isLinkActive('dosen') || isLinkActive('struktur') ? 'active' : ''}`}>
+                            <a 
+                                className="nav-link dropdown-toggle" 
+                                href="#" 
+                                id="navbarDropdownProfil" 
+                                role="button" 
+                                data-bs-toggle="dropdown" 
+                                aria-expanded="false"
+                            >
+                                Profil
+                            </a>
+                            <ul className="dropdown-menu" aria-labelledby="navbarDropdownProfil">
+    <li><a className="dropdown-item" href="#" onClick={() => window.setCurrentPage('visi-misi')}>Visi dan Misi</a></li>
+    <li><a className="dropdown-item" href="#" onClick={() => window.setCurrentPage('sejarah')}>Sejarah Singkat</a></li>
+    <li><a className="dropdown-item" href="#" onClick={() => window.setCurrentPage('dosen')}>Dosen Sistem Informasi</a></li>
+    <li><a className="dropdown-item" href="#" onClick={() => window.setCurrentPage('struktur')}>Struktur Organisasi</a></li>
+    <li><a className="dropdown-item" href="#" onClick={() => window.setCurrentPage('profil-lulusan')}>Profil Lulusan</a></li>
+</ul>
+                        </li>
+                        <li className="nav-item dropdown">
+                            <a 
+                                className="nav-link dropdown-toggle" 
+                                href="#" 
+                                id="navbarDropdownAkademik" 
+                                role="button" 
+                                data-bs-toggle="dropdown" 
+                                aria-expanded="false"
+                                >
+                                    Akademik
+                            </a>
+                            <ul className="dropdown-menu" aria-labelledby="navbarDropdownAkademik">
+                            <li><a className="dropdown-item" href="#" onClick={() => window.setCurrentPage('kurikulum')}>Kurikulum</a></li>
+                            <li><a className="dropdown-item" href="#" onClick={() => window.setCurrentPage('MataKuliah')}>Mata Kuliah</a></li>
+                             <li><a className="dropdown-item" href="#" onClick={() => window.setCurrentPage('mbkm')}>Program MBKM</a></li> 
+                            </ul>
+                        </li>
+                        <li className="nav-item"><a className="nav-link" href="#" onClick={() => window.setCurrentPage('kemahasiswaan')}>Kemahasiswaan</a></li>
+                        <li className="nav-item"><a className="nav-link" href="#" onClick={() => window.setCurrentPage('fasilitas')}>Fasilitas</a></li>
+                    </ul>
+                    <a className="nav-link ms-3" href="#"><i className="fa-solid fa-search fa-lg" style={{ color: 'var(--untan-blue)' }}></i></a>
+                </div>
+            </div>
+        </nav>
+        </>
+    );
+}
+
+function Hero() {
+    return (
+        <section className="hero" id="home-header">
+            <div className="container">
+                {/* Judul SI Sistem Informasi diganti di Hero */}
+                <h1 className="display-6 fw-bold">S1 Sistem Informasi</h1>
+                <p className="lead">Fakultas Matematika dan Ilmu Pengetahuan Alam</p>
+                {/* Tambahkan gambar hero di sini jika mau */}
+                {/*  */}
+            </div>
+        </section>
+    );
+}
+
+// ===== KOMPONEN TENTANG SI BARU (SESUAI LAYOUT GAMBAR) =====
+function TentangSI() {
+    return (
+        <section className="tentang-si" id="tentang-si">
+            <div className="container">
+                <div className="row">
+                    {/* Kolom Kiri: Teks dan Tombol */}
+                    <div className="col-md-7 mb-4 mb-md-0">
+                        <h2 className="display-6 fw-bold mb-4">Tentang Sistem Informasi</h2>
+                        <p className="lead">
+                        Program Studi Sistem Informasi Universitas Tanjungpura merupakan salah satu program studi strata 1 (S-1) yang berada di Fakultas Matematika dan Ilmu Pengetahuan Alam (FMIPA). Fokus pendidikan dan pembelajaran pada Program Studi Sistem Informasi Universitas Tanjungpura pada bidang keahlian Manajemen Sistem Informasi, Intelejensi Bisnis, dan Pengembangan Perangkat Lunak.
+                        </p>
+                        <a href="#" className="btn btn-primary-custom mt-3">Selengkapnya</a>
+                    </div>
+                    
+                    {/* Kolom Kanan: Card Tombol */}
+                    <div className="col-md-5 d-flex flex-column justify-content-center">
+                        <div className="d-grid gap-3">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    );
+}
+
+// ===== KOMPONEN SAMBUTAN KAPRODI BARU =====
+function SambutanKaprodi() {
+    return (
+        <section className="sambutan-kaprodi">
+            <div className="container">
+                <div className="row align-items-center">
+                    <div className="col-md-4 mb-4 mb-md-0">
+                        <img 
+                            src="https://sisfo.untan.ac.id/wp-content/uploads/2023/11/bu-renny-1-1023x1536-removebg-preview-e1698993265598.png" 
+                            alt="Ketua Program Studi Sistem" 
+                            className="kaprodi-img"
+                        />
+                    </div>
+                    <div className="col-md-8">
+                        <div className="sambutan-content">
+                            <h1 className="sambutan-title">Kata Pengantar</h1>
+                            <h2 className="h5 mb-3">Ketua Program Studi Sistem Informasi</h2>
+                            <p>Assalamu'alaikum Wr. Wb.</p>
+                            <p>Selamat datang di Website Program Studi Sistem Informasi FMIPA Universitas Tanjungpura.</p>
+                            <p>Program Studi Sistem Informasi merupakan salah satu program studi yang berkomitmen untuk menghasilkan lulusan yang unggul, adaptif, dan siap bersaing di dunia digital. Sejak berdirinya, kami terus berupaya mengembangkan kurikulum, meningkatkan kualitas pembelajaran, serta memperkuat kompetensi mahasiswa dalam bidang teknologi informasi, analisis bisnis, dan pengembangan sistem.</p>
+                            <p>Dengan dukungan tenaga pengajar yang profesional, fasilitas pembelajaran yang memadai, serta lingkungan akademik yang kolaboratif, kami bertekad untuk memberikan pendidikan terbaik bagi mahasiswa agar mampu menghadapi tantangan dan kebutuhan industri yang terus berkembang</p>
+                            <p>Kami berharap website ini dapat menjadi sarana informasi yang lengkap bagi mahasiswa, calon mahasiswa, maupun masyarakat umum untuk mengenal lebih jauh mengenai Program Studi Sistem Informasi FMIPA Universitas Tanjungpura.</p>
+                            <p>Wassalamu'alaikum Wr. Wb.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    );
+}
+
+
+// ===================================
+// ===== KOMPONEN UTILITY (CARD, GALERI, DLL) =====
+// ===================================
+
+function KegiatanCard({ judul, deskripsi, tanggal, gambar }) {
+    return (
+        <div className="col-md-4 mb-4">
+            <div className="card h-100 shadow-sm">
+                <img src={gambar} className="card-img-top" alt={judul} style={{ height: '200px', objectFit: 'cover' }} />
+                <div className="card-body">
+                    <h5 className="card-title text-primary">{judul}</h5>
+                    <p className="card-text text-muted small">{tanggal}</p>
+                    <p className="card-text">{deskripsi}</p>
+                </div>
+                <div className="card-footer bg-white border-0">
+                    <a href="#" className="btn btn-outline-primary btn-sm">Baca Selengkapnya</a>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+function Galeri() {
+    const fotoList = [
+        "https://universitaspertamina.ac.id/uploads/news/689aef323adbb.webp",
+        "https://ft.uhamka.ac.id/wp-content/uploads/2024/05/IMG_3458-1024x768.jpg",
+        "https://static.promediateknologi.id/crop/0x0:0x0/0x0/photo/esensi/2023/02/mahasiswa.webp",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGmzb5JWTNet5IFlWuRRgAqVW3e4KffmMomw&s",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGRs8WvPPVHUSqATSeuo24P9dppmKzjrFssw&s",
+        "https://ugm.ac.id/wp-content/uploads/2025/08/ROADSTER-1-270x182.jpg",
+    ];
+    return (
+        <section className="container my-5" id="galeri">
+            <h2 className="text-center text-primary mb-4">Galeri Kegiatan</h2>
+            <div className="row">
+                {fotoList.map((url, i) => (
+                    <div className="col-md-4 mb-3" key={i}>
+                        <img src={url} alt={`Foto ${i+1}`} className="img-fluid rounded shadow-sm" style={{ height: '250px', width: '100%', objectFit: 'cover' }} />
+                    </div>
+                ))}
+            </div>
+        </section>
+    );
+}
+
+// KOMPONEN MEDIA SOSIAL YANG DIPERBAIKI
+function MediaSosial() {
+    const socialMedia = [
+        { 
+            nama: "Facebook", 
+            ikon: "fa-brands fa-facebook-square", 
+            link: "https://www.facebook.com/sisfo.fmipauntan.7?mibextid=ZbWKwL", 
+            info: "sisfo.fmipauntan",
+            class: "facebook"
+        },
+        { 
+            nama: "Instagram", 
+            ikon: "fa-brands fa-instagram", 
+            link: "https://www.instagram.com/sisfountan?igshid=MzRlODBiNWFlZA%3D%3D", 
+            info: "@sisfountan",
+            class: "instagram"
+        },
+        { 
+            nama: "Youtube", 
+            ikon: "fa-brands fa-youtube", 
+            link: "https://www.youtube.com/@hmsiuntan", 
+            info: "HMSI Untan",
+            class: "youtube"
+        },
+        { 
+            nama: "Email", 
+            ikon: "fa-solid fa-envelope", 
+            link: "mailto:Sisfo@untan.ac.id", 
+            info: "Sisfo@untan.ac.id",
+            class: "email"
+        },
+    ];
+
+    return (
+        <section className="social-media-section">
+            <div className="container">
+                <h2 className="text-center section-title">Sosial Media</h2>
+                <div className="row">
+                    {socialMedia.map((item, index) => (
+                        <div className="col-md-6 col-lg-3 mb-4" key={index}>
+                            <a href={item.link} target="_blank" rel="noopener noreferrer" className="social-link">
+                                <div className="card social-card">
+                                    <div className="card-body p-4 d-flex align-items-center">
+                                        <div className={`social-icon ${item.class}`}>
+                                            <i className={item.ikon}></i>
+                                        </div>
+                                        <div className="social-info">
+                                            <div className="social-name">{item.nama}</div>
+                                            <div className="social-handle">{item.info}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
+    );
+}
+
+function Footer() {
+    return (
+        <footer>
+            <p>© {new Date().getFullYear()} Fakultas MIPA Universitas Tanjungpura</p>
+        </footer>
+    );
+}
+
+function Berita() {
+    const beritaList = [
+        { 
+            judul: "Prodi Sistem Informasi Mendapat Akreditasi 'Baik Sekali'", 
+            tanggal: "01 Oktober 2025", 
+            deskripsi: "Pencapaian ini menandai peningkatan signifikan dalam kualitas pendidikan dan fasilitas Fmipa.",
+            gambar: "https://sisfo.untan.ac.id/wp-content/uploads/2023/10/header-1-300x200.jpg"
+        },
+        { 
+            judul: "PKM Dosen di Mempawah Mangrove Park", 
+            tanggal: "5 November 2025", 
+            deskripsi: "Dosen berinteraksi langsung dengan masyarakat dalam rangka implementasi tridharma perguruan tinggi.",
+            gambar: "https://sisfo.untan.ac.id/wp-content/uploads/2023/11/2023_07_13_09_52_IMG_0963-scaled.jpg"
+        },
+        { 
+            judul: "Kuliah Umum Sistem Informasi", 
+            tanggal: "10 November 2025", 
+            deskripsi: "Kuliah Umum Mahasiswa dan Dosen Sistem Informasi bersama Pembicara Terkemuka.",
+            gambar: "https://mipa.untan.ac.id/file/artikel/20180824-032112-Kuliah%20Umum1.jpg"
+        },
+    ];
+    
+    return (
+        <section className="container my-5" id="berita"> 
+            <h2 className="text-center text-primary mb-4">Berita Terbaru</h2>
+            <div className="row">
+                {beritaList.map((berita, index) => (
+                    <KegiatanCard 
+                        key={index}
+                        judul={berita.judul}
+                        tanggal={berita.tanggal}
+                        deskripsi={berita.deskripsi}
+                        gambar={berita.gambar}
+                    />
+                ))}
+            </div>
+        </section>
+    );
+}
+
+// ===================================
+// ===== KOMPONEN HALAMAN PROFIL BARU (SPA) =====
+// ===================================
+
+function HalamanVisiMisi() {
+    return (
+        <section className="container my-5" id="visi-misi-page">
+            <div className="p-3 mb-3 bg-light rounded">
+                <p className="mb-0 small text-muted">Beranda &gt; Profil &gt; Visi dan Misi</p>
+            </div>
+            <div className="row">
+                <div className="col-md-3">
+                    <ul className="list-group">
+                        <li className="list-group-item fw-bold">Profil</li>
+                        <li className="list-group-item active" style={{ backgroundColor: 'var(--untan-blue)', borderColor: 'var(--untan-blue)' }}>Visi dan Misi</li>
+                        <li className="list-group-item"><a href="#" onClick={() => window.setCurrentPage('sejarah')} className="text-decoration-none text-dark">Sejarah Singkat</a></li>
+                        <li className="list-group-item"><a href="#" onClick={() => window.setCurrentPage('struktur')} className="text-decoration-none text-dark">Struktur Organisasi</a></li>
+                        <li className="list-group-item"><a href="#" onClick={() => window.setCurrentPage('dosen')} className="text-decoration-none text-dark">Dosen Sistem Informasi</a></li>
+                        {/* Tambahkan link profil lainnya di sini */}
+                    </ul>
+                </div>
+                <div className="col-md-9">
+                    <h2 className="text-primary mb-4">Visi dan Misi Program Studi SI</h2>
+                    <div className="card p-4 shadow-sm">
+                        <h4>Visi</h4>
+                        <p>Program Studi yang inovatif dan adaptif dalam mengembangkan keilmuan dan mengelola sistem informasi guna mendukung transformasi digitalisasi potensi kekayaan lokal.</p>
+
+                        <h4>Misi</h4>
+                        <ol>
+                            <li>Mengembangkan dan mengimplementasikan program pendidikan di bidang sistem informasi yang inovatif dengan menyesuaikan perkembangan zaman.</li>
+                            <li>Melaksanakan penelitian dalam bidang sistem informasi yang berfokus pada lingkungan tropis dan mampu berkompetisi sacara nasional dan internasional.</li>
+                            <li>Memberikan niai dan kontribusi berupa kegiatan pengabdian dalam inovasi di bidang Sistem Informasi kepada pemerintah, industri ,dan masyarakat.</li>
+                            <li>Menjalin kemitraan dengan pemerintah industri maupun institus lainnya pada bidang sistem informasi untuk mendukung kegiatan Tridhatma Perguruan Tinggi.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <a href="#" className="btn btn-outline-primary mt-4" onClick={() => window.setCurrentPage('home')}>&larr; Kembali ke Beranda</a>
+        </section>
+    );
+}
+
+function HalamanKurikulum() {
+    return (
+        <section className="container my-5">
+            <h2 className="text-primary mb-4">Kurikulum</h2>
+            <div className="card p-4">
+                <p>Berdasarkan Keputusan Menteri Nomor: 442/6.E2/DT/2014 tanggal 19 Mei 2014, Program Studi Sistem Informasi sejak pendiriannya menerapkan Kurikulum Berbasis Kompetensi (KBK) Seiring berjalannya waktu berubah menjadi Kurikulum Pendidikan Tinggi (KPI) yang sesuai dengan Kerangka Kualifikasi Nasional indonesia (KKN). Kurikulum Program Studi Sistem Informasi saat ini disesuaikan dengan Peraturan Menteri Pendidikan dan Kebudayaan Republik Indonesia Nomor 3 Tahun 2020 tentang Standar Nasional Pendidikan Tinggi yang memuat kebijakan mengenai Merdeka Belajar Kampus Merdeka (MBKM), dengan kurikulum yang mereferensi dari standar IS Computing Curricula yang dikeluarkan oleh ACM tahun 2020 serta kerangka kerja KKNI APTIKOM tahun 2019.</p>
+                <p> Muatan kurikulum Program Studi Sistem Informasi sekarang terdiri dari kurikulum teori 149 SKS (97%) dan kurikulum praktek 5 SKS (3%). Adapun untuk menyelesaikan program sarjana di Program Studi Sister Informasi wajib menyelesaikan minimal 144 SKS. Pada mata kuliah yang memiliki praktikum, terdapat perbedaan durasi perkuliahan yang disesuaikan dengan aturan yang berlaku. SKS teori dan praktikum dipisah menjadi 2 SKS teori (100 menit) dan 1 SKS praktikum (170 menit).
+                Praktikum selain didapatkan pada mata kuliah wajib juga bisa didapatkan pada program Merdeka Belajar Kampus Merdeka (MBKM) dari Kementerian Pendidikan dan Kebudayaan.</p>
+            </div>
+            <a href="#" className="btn btn-outline-primary mt-4" onClick={() => window.setCurrentPage('home')}>&larr; Kembali ke Beranda</a>
+        </section>
+    );
+}
+
+function MataKuliah() {
+    // Array berisi 8 link foto mata kuliah
+    const mataKuliahFoto = [
+         "https://sisfo.untan.ac.id/wp-content/uploads/2023/11/1.png",
+        "https://sisfo.untan.ac.id/wp-content/uploads/2023/11/2.png",
+        "https://sisfo.untan.ac.id/wp-content/uploads/2023/11/3.png",
+        "https://sisfo.untan.ac.id/wp-content/uploads/2023/11/4.png",
+        "https://sisfo.untan.ac.id/wp-content/uploads/2023/11/5.png",
+        "https://sisfo.untan.ac.id/wp-content/uploads/2023/11/6.png",
+
+    ];
+
+    return (
+        <section className="container my-5">
+            <div className="p-3 mb-3 bg-light rounded">
+                <p className="mb-0 small text-muted">Beranda &gt; Akademik &gt; Mata Kuliah</p>
+            </div>
+            <h2 className="text-primary mb-4">Mata Kuliah Program Studi Sistem Informasi</h2>
+            
+            {/* Foto ditampilkan vertikal satu-satu */}
+            <div className="row justify-content-center">
+                <div className="col-md-8">
+                    {mataKuliahFoto.map((foto, index) => (
+                        <div className="card shadow-sm mb-4" key={index}>
+                            <img 
+                                src={foto} 
+                                alt={`Mata Kuliah ${index + 1}`} 
+                                className="img-fluid" 
+                                style={{ width: '100%', height: 'auto' }}
+                            />
+                        </div>
+                    ))}
+                </div>
+            </div>
+            
+            <a href="#" className="btn btn-outline-primary mt-4" onClick={() => window.setCurrentPage('home')}>&larr; Kembali ke Beranda</a>
+        </section>
+    );
+}
+
+function HalamanMBKM() {
+    return (
+        <section className="container my-5">
+            <h2 className="text-primary mb-4">Program MBKM</h2>
+            <div className="card p-4">
+                <p>Apa itu MBKM?
+Program Merdeka Belajar Kampus Merdeka (MBKM) adalah kebijakan dari Kementrian Pendidikan dan Kebudayaan Indonesia yang dituangkan dalam peraturan Menteri Pendidikan dan Kebudayaan RI Nomor 3 Tahun 2020 yang memberikan kesempatan kepada mahasiswa melakukan aktifitas pembelajaran sebanyak 3 semester diluar Program Studi asal.</p>
+<p>
+Manfaat
+Merdeka Belajar Kampus Merdeka (MBKM) memberikan manfaat agar mahasiswa memperoleh kesempatan yang lebih luas untuk mengeksplorasi minat dan bakat selama menjalani pendidikan di Program Studi Sarjana Terapan.</p>
+            </div>
+            <a href="#" className="btn btn-outline-primary mt-4" onClick={() => window.setCurrentPage('home')}>&larr; Kembali ke Beranda</a>
+        </section>
+    );
+}
+
+function HalamanKemahasiswaan() {
+    return (
+        <section className="container my-5">
+            <h2 className="text-primary mb-4">Kemahasiswaan</h2>
+            
+            {/* Kegiatan Kemahasiswaan */}
+            <section className="mb-5">
+                <div className="row">
+                    <KegiatanCard
+                        judul="Seminar Riset Mahasiswa"
+                        tanggal="12 Oktober 2025"
+                        deskripsi="Kegiatan tahunan yang menampilkan hasil penelitian mahasiswa FMIPA dari berbagai program studi."
+                        gambar="https://img.antarafoto.com/cache/1200x799/2024/11/29/gelar-karya-inovasi-mahasiswa-dan-pelajar-di-semarang-1f8hd-dom.jpg"
+                    />
+                    <KegiatanCard
+                        judul="Pelatihan Pengembangan Web"
+                        tanggal="3 November 2025"
+                        deskripsi="Workshop pemrograman React dan Node.js untuk mahasiswa Sistem Informasi."
+                        gambar="https://b3338070.smushcdn.com/3338070/wp-content/uploads/2024/06/web-3-1200x600.jpg?lossy=2&strip=1&webp=1"
+                    />
+                    <KegiatanCard
+                        judul="Lomba Inovasi Sains"
+                        tanggal="20 November 2025"
+                        deskripsi="Kompetisi antar mahasiswa dalam mengembangkan ide sains dan teknologi yang bermanfaat bagi masyarakat."
+                        gambar="https://www.its.ac.id/wp-content/uploads/2021/09/LITL-819x1024.jpg"
+                    />
+                </div>
+            </section>
+            
+            <a href="#" className="btn btn-outline-primary mt-4" onClick={() => window.setCurrentPage('home')}>&larr; Kembali ke Beranda</a>
+        </section>
+    );
+}
+
+    function HalamanFasilitas() {
+    const fasilitasList = [
+        {
+            judul: "Ruang Perkuliahan",
+            deskripsi: "Ruang Perkuliahan merupakan fasilitas yang gunakan untuk melakukan kegiatan belajar mengajar.",
+            gambar: "https://sisfo.untan.ac.id/wp-content/uploads/elementor/thumbs/WhatsApp-Image-2023-03-13-at-20.33.08-qec6a6jgd2fsghn58a9wofsrhldiu1d7wza7djo7fw.jpg"
+        },
+        {
+            judul: "Laboratorium Komputer Sisfo",
+            deskripsi: "Laboratorium Komputer Sisfo merupakan fasilitas yang digunakan untuk melakukan praktikum pada matakuliah tertent",
+            gambar: "https://sisfo.untan.ac.id/wp-content/uploads/elementor/thumbs/1701790575220-scaled-qgddperqs9h2iw2vj4hy9i6zifg74qg51rg4nh83vw.jpg"
+        },
+        {
+            judul: "Ruang Baca",
+            deskripsi: "Ruang Baca sebagai ruang arsip tugas akhir mahasiswa FMIPA UNTAN  dan buku bacaan yang dapat diakses oleh mahasiswa",
+            gambar: "https://sisfo.untan.ac.id/wp-content/uploads/elementor/thumbs/WhatsApp-Image-2023-12-05-at-22.57.59_97cf90bb-scaled-qgddt48tqqjsbiozvq6z3kifv56bhr60w432srq7cc.jpg "
+        },
+        {
+            judul: "Smart Area",
+            deskripsi: "Smart Area dimanfaatkan oleh mahasiswa sebagai tempat untuk melakukan diskusi maupun tempat untuk mengerjakan tugas.",
+            gambar: "https://sisfo.untan.ac.id/wp-content/uploads/elementor/thumbs/WhatsApp-Image-2023-12-05-at-23.40.51_3bb08f8b-scaled-qgdfg4k2sr4632aepnv0d62uzsdxdyqn65ui179vxo.jpg"
+        },
+        {
+            judul: "Ruang Dosen dan Staff",
+            deskripsi: "Ruang yang dikhususkan oleh fakultas untuk digunakan oleh dosen Program Studi Sistem Informasi.ang diskusi yang nyaman untuk kegiatan belajar kelompok, presentasi, dan diskusi antarmahasiswa maupun dengan dosen.",
+            gambar: "https://sisfo.untan.ac.id/wp-content/uploads/elementor/thumbs/WhatsApp-Image-2023-12-05-at-23.44.56_a48ea137-qgdfpqgonchbur0v7dyj495szqyxebkmbqj3zxzl4c.jpg"
+        },
+        {
+            judul: "Labkom FMIPA",
+            deskripsi: "Laboratorium Komputer yang dimanfaatkan untuk melakukan kegiatan belajar mengajar khususnya pada mata kuliah praktikum.",
+            gambar: "https://sisfo.untan.ac.id/wp-content/uploads/elementor/thumbs/WhatsApp-Image-2023-12-05-at-22.58.00_8cd625a4-scaled-qgddvipz7hu5zn7durkngyouilc35wpbw03qy85zfw.jpg"
+        },
+    ];
+
+    return (
+        <section className="container my-5">
+            <h2 className="text-primary mb-4">Fasilitas</h2>
+            <div className="row">
+                {fasilitasList.map((fasilitas, index) => (
+                    <div className="col-md-6 mb-4" key={index}>
+                        <div className="card h-100 shadow-sm">
+                            <img src={fasilitas.gambar} className="card-img-top" alt={fasilitas.judul} style={{ height: '250px', objectFit: 'cover' }} />
+                            <div className="card-body">
+                                <h5 className="card-title text-primary">{fasilitas.judul}</h5>
+                                <p className="card-text">{fasilitas.deskripsi}</p>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+            <a href="#" className="btn btn-outline-primary mt-4" onClick={() => window.setCurrentPage('home')}>&larr; Kembali ke Beranda</a>
+        </section>
+    );
+}
+// Komponen Halaman lainnya (Sejarah, Dosen, Struktur)
+function HalamanSejarah() {
+    return (
+        <section className="container my-5" id="sejarah-page">
+            <div className="p-3 mb-3 bg-light rounded">
+                <p className="mb-0 small text-muted">Beranda &gt; Profil &gt; Sejarah Singkat</p>
+            </div>
+            <div className="row">
+                <div className="col-md-3">
+                    <ul className="list-group">
+                        <li className="list-group-item fw-bold">Profil</li>
+                        <li className="list-group-item"><a href="#" onClick={() => window.setCurrentPage('visi-misi')} className="text-decoration-none text-dark">Visi dan Misi</a></li>
+                        <li className="list-group-item active" style={{ backgroundColor: 'var(--untan-blue)', borderColor: 'var(--untan-blue)' }}>Sejarah Singkat</li>
+                        <li className="list-group-item"><a href="#" onClick={() => window.setCurrentPage('struktur')} className="text-decoration-none text-dark">Struktur Organisasi</a></li>
+                        <li className="list-group-item"><a href="#" onClick={() => window.setCurrentPage('dosen')} className="text-decoration-none text-dark">Dosen PS Sistem Informasi</a></li>
+                    </ul>
+                </div>
+                <div className="col-md-9">
+                    <h2 className="text-primary mb-4">Sejarah</h2>
+                    <p>Program Studi Sistem informasi berdiri sejak terbitnya Keputusan Menteri Nomor: 442/E.E2/DT/2014 tanggal 19 Mei 2014. Program Studi Sistem informasi menerapkan Kurikulum Berbasis Kompetensi (KBK) saat awal pendirian dan menerima mahasiswa baru pada semester gasal tahun akademik 2014/2015. Mahasiswa pada angkatan pertama berjumlah 30 orang dengan satu jalur seleksi SBMPTN saja, karena waktu pendirian yang telah melewati jalur seleksi SNMPTN dan belum siap untuk menerima jalur seleksi mandiri.  Di tahun ke dua, Program Studi Sistem informasi mulai menerima mahasiswa baru dengan tiga jalur seleksi yaitu SNMPTN, SBMPTN, dan Mandiri.</p>
+                    <p>Saat ini Program Studi Sistem informasi menerapkan Kurikulum Pendidikan Tinggi (KPT) yang mengacu pada Kerangka Kualifikasi Nasional Indonesia (KKNI). Muatan kurikulum ini terdiri dari kurikulum teori 101 sks (70%) dan kurikulum praktek 43 sks (30%) yang total berjumlah 144 SKS. Kurikulum praktek dan kurikulum teori ditetapkan berdasarkan masukan pakar, sejawat dan kalangan industri dengan penekanan pada kompetensinya. Program Studi Sistem informasi mengajarkan landasan ilmu pengetahuan dan penerapan teknologi informasi dalam suatu organisasi. Terkait hal tersebut kurikulum Program Studi Sistem informasi bersifat khas karena dibangun diatas 3 (tiga) bidang yaitu: Ilmu Komputer, Manajemen dan Bisnis. Selama perkuliahan mahasiswa akan dibekali dengan berbagai kompetensi di ketiga bidang tersebut agar mampu memberikan solusi terkait sistem informasi yang sesuai dengan kebutuhan organisasi. Sejak tanggal 9 Juli 2018, berdasarkan keputusan Badan Akreditasi Nasional Perguruan Tinggi (BAN-PT) No. 1727/SK/BAN-PT/Akred/S/VII/2018 menyatakan bahwa PS Sisfo, Pada Program Sarjana Universitas Tanjungpura telah Terakreditasi dengan peringkat “Terakreditasi B” yang berlaku selama 5 tahun terhitung sejak tanggal 9 Juli 2018 – 9 Juli 2023.</p>
+                </div>
+            </div>
+            <a href="#" className="btn btn-outline-primary mt-4" onClick={() => window.setCurrentPage('home')}>&larr; Kembali ke Beranda</a>
+        </section>
+    );
+}
+
+function HalamanDosen() {
+    const dosen = [
+        "Renny Puspita Sari, S.T., M.T. (Ketua Prodi)",
+        "Ibnur Rusi,S.Kom., M.M.",
+        "Nurul Mutiah,S.T., M.T.",
+        "Dian Prawira,S.T., M.Eng.",
+        "Ilhamsyah,S.Si., M.Cs.",
+        "Syahru Rahmayuda,S.Kom., M.Kom.",
+        "Ferdy Febriyanto,S.Kom., M.Kom."
+    ];
+    return (
+        <section className="container my-5" id="dosen-page">
+            <div className="p-3 mb-3 bg-light rounded">
+                <p className="mb-0 small text-muted">Beranda &gt; Profil &gt; Dosen</p>
+            </div>
+            <div className="row">
+                <div className="col-md-3">
+                    <ul className="list-group">
+                        <li className="list-group-item fw-bold">Profil</li>
+                        <li className="list-group-item"><a href="#" onClick={() => window.setCurrentPage('visi-misi')} className="text-decoration-none text-dark">Visi dan Misi</a></li>
+                        <li className="list-group-item"><a href="#" onClick={() => window.setCurrentPage('sejarah')} className="text-decoration-none text-dark">Sejarah Singkat</a></li>
+                        <li className="list-group-item"><a href="#" onClick={() => window.setCurrentPage('struktur')} className="text-decoration-none text-dark">Struktur Organisasi</a></li>
+                        <li className="list-group-item active" style={{ backgroundColor: 'var(--untan-blue)', borderColor: 'var(--untan-blue)' }}>Dosen Sistem Informasi</li>
+                        <li className="list-group-item active" style={{ backgroundColor: 'var(--untan-blue)', borderColor: 'var(--untan-blue)' }}>Profil</li>
+                    </ul>
+                </div>
+                <div className="col-md-9">
+                    <h2 className="text-primary mb-4">Dosen Program Studi Sistem Informasi</h2>
+                    <ul className="list-group list-group-flush">
+                        {dosen.map((d, i) => (
+                            <li key={i} className="list-group-item">{d}</li>
+                        ))}
+                    </ul>
+                </div>
+            </div>
+            <a href="#" className="btn btn-outline-primary mt-4" onClick={() => window.setCurrentPage('home')}>&larr; Kembali ke Beranda</a>
+        </section>
+    );
+}
+
+function HalamanStruktur() {
+    return (
+        <section className="container my-5" id="struktur-page">
+            <div className="p-3 mb-3 bg-light rounded">
+                <p className="mb-0 small text-muted">Beranda &gt; Profil &gt; Struktur Organisasi</p>
+            </div>
+            <div className="row">
+                <div className="col-md-3">
+                    <ul className="list-group">
+                        <li className="list-group-item fw-bold">Profil</li>
+                        <li className="list-group-item"><a href="#" onClick={() => window.setCurrentPage('visi-misi')} className="text-decoration-none text-dark">Visi dan Misi</a></li>
+                        <li className="list-group-item"><a href="#" onClick={() => window.setCurrentPage('sejarah')} className="text-decoration-none text-dark">Sejarah Singkat</a></li>
+                        <li className="list-group-item active" style={{ backgroundColor: 'var(--untan-blue)', borderColor: 'var(--untan-blue)' }}>Struktur Organisasi</li>
+                        <li className="list-group-item"><a href="#" onClick={() => window.setCurrentPage('dosen')} className="text-decoration-none text-dark">Dosen PS Sistem Informasi</a></li>
+                    </ul>
+                </div>
+                <div className="col-md-9">
+                    <h2 className="text-primary mb-4">Struktur Organisasi Prodi</h2>
+                    <div className="text-center p-4 card shadow-sm">
+        <img 
+        src="https://sisfo.untan.ac.id/wp-content/uploads/2023/10/Struktur-Organisasi-Sisfo-scaled.jpg" 
+        alt="Struktur Organisasi Prodi SI" 
+        className="img-fluid" 
+        style={{ maxWidth: '100%', height: 'auto' }}
+          />
+        </div>
+                </div>
+            </div>
+            <a href="#" className="btn btn-outline-primary mt-4" onClick={() => window.setCurrentPage('home')}>&larr; Kembali ke Beranda</a>
+        </section>
+    );
+}
+
+function HalamanProfilLulusan() {
+    return (
+        <section className="container my-5">
+            <div className="p-3 mb-3 bg-light rounded">
+                <p className="mb-0 small text-muted">Beranda &gt; Profil &gt; Profil Lulusan</p>
+            </div>
+            <div className="row">
+                <div className="col-md-3">
+                    <ul className="list-group">
+                        <li className="list-group-item fw-bold">Profil</li>
+                        <li className="list-group-item"><a href="#" onClick={() => window.setCurrentPage('visi-misi')} className="text-decoration-none text-dark">Visi dan Misi</a></li>
+                        <li className="list-group-item"><a href="#" onClick={() => window.setCurrentPage('sejarah')} className="text-decoration-none text-dark">Sejarah Singkat</a></li>
+                        <li className="list-group-item"><a href="#" onClick={() => window.setCurrentPage('struktur')} className="text-decoration-none text-dark">Struktur Organisasi</a></li>
+                        <li className="list-group-item"><a href="#" onClick={() => window.setCurrentPage('dosen')} className="text-decoration-none text-dark">Dosen Sistem Informasi</a></li>
+                        <li className="list-group-item active" style={{ backgroundColor: 'var(--untan-blue)', borderColor: 'var(--untan-blue)' }}>Profil Lulusan</li>
+                    </ul>
+                </div>
+                <div className="col-md-9">
+                    <h2 className="text-primary mb-4">Profil Lulusan</h2>
+                    <div className="card p-4 shadow-sm">
+                        <p>Lulusan Program Studi Sistem Informasi diharapkan memiliki profil sebagai berikut:</p>
+                        <ol>
+                            <li>Analis Sistem Informasi</li>
+                            <li>Manajer Proyek IT</li>
+                            <li>Konsultan Sistem Informasi</li>
+                            <li>Pengembang Aplikasi</li>
+                            <li>Data Analyst</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <a href="#" className="btn btn-outline-primary mt-4" onClick={() => window.setCurrentPage('home')}>&larr; Kembali ke Beranda</a>
+        </section>
+    );
+}
+
+
+// ===================================
+// ===== KOMPONEN UTAMA APP (FIXED) =====
+// ===================================
+
+function App() {
+    // 1. Definisikan state halaman awal
+    const [currentPage, setCurrentPage] = React.useState('home');
+
+    // 2. Daftarkan fungsi setCurrentPage ke objek global window (PENTING!)
+    // Ini memungkinkan link di mana saja (termasuk di dalam Dropdown) 
+    // untuk mengubah state App
+    React.useEffect(() => {
+        window.setCurrentPage = setCurrentPage;
+    }, []); 
+
+    // 3. Fungsi untuk merender konten berdasarkan state
+    const renderContent = () => {
+        switch (currentPage) {
+            case 'visi-misi':
+                return <HalamanVisiMisi />;
+            case 'sejarah':
+                return <HalamanSejarah />;
+            case 'dosen':
+                return <HalamanDosen />; 
+            case 'struktur':
+                return <HalamanStruktur />;
+            case 'profil-lulusan':
+                return <HalamanProfilLulusan />;
+
+            case 'kurikulum':
+                return <HalamanKurikulum />;
+            case 'MataKuliah':
+                return <MataKuliah />;
+            case 'mbkm':
+                return <HalamanMBKM />;
+            case 'kemahasiswaan':
+            return <HalamanKemahasiswaan />;
+            case 'fasilitas':
+            return <HalamanFasilitas />;
+            
+            case 'home':
+            default:
+                // Tampilkan semua komponen halaman utama
+                return (
+                    <>
+                        <Hero />
+                        <TentangSI /> 
+                        <SambutanKaprodi />
+                        <Berita /> 
+                        <Galeri />
+                        <MediaSosial />
+                    </>
+                );
+        }
+    };
+
+    return (
+        <div>
+            {/* Teruskan currentPage sebagai prop agar Navbar bisa tahu link mana yang aktif */}
+            <MyNavbar currentPage={currentPage} />
+            
+            {renderContent()} 
+            
+            <Footer />
+        </div>
+    );
+}
+
+// Render ke root
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
+
+</script>
+
+</head>
+<body>
+    <div id="root"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
