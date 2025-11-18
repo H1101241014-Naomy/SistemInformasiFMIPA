@@ -36,11 +36,11 @@
 
         /* 2. MAIN NAVBAR */
         .navbar-custom {
-            background-color: white; /* Navbar utama putih/terang */
+            background-color: white;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
         .navbar-custom .nav-link {
-            color: var(--untan-blue) !important; /* Teks Biru Tua */
+            color: var(--untan-blue) !important;
             font-weight: 500;
             padding: 0.5rem 1rem;
         }
@@ -56,14 +56,13 @@
         align-items: center;
         }
         .navbar-custom .dropdown-toggle {
-         white-space: normal !important;  /* Ubah dari nowrap jadi normal */
+         white-space: normal !important;  
         }
         .navbar-custom .nav-link {
     color: var(--untan-blue) !important;
     font-weight: 500;
-    padding: 0.5rem 1rem;  /* Spacing sudah diatur di sini */
+    padding: 0.5rem 1rem;  /* Pengaturan spacing */
     }
-        /* Navbar Item Aktif (Contoh: Profil aktif di gambar) */
         .navbar-custom .nav-item.active .nav-link {
             background-color: var(--untan-blue);
             color: white !important;
@@ -73,14 +72,14 @@
             margin-right: 10px;
         }
 
-        /* 3. HERO / HEADER (Biru Tua Dominan dengan border Oranye) */
+        /* 3. HERO HEADER */
         .hero {
-            background-color: var(--untan-blue); /* Warna solid biru tua */
+            background-color: var(--untan-blue);
             background-image: none;
             color: white; 
             padding: 30px 0;
             text-align: left;
-            /* Garis bawah oranye di bawah hero section */
+        
             border-bottom: 5px solid var(--untan-orange); 
             position: relative;
             overflow:hidden;
@@ -100,15 +99,14 @@
             z-index: 1;
         }
 
-        /* 4. Bagian Tentang SI: Kartu Tombol */
+        /* 4. Bagian Tentang Sistem Informasi: Kartu Tombol */
         .tentang-si {
-            /* Warna latar belakang untuk Tentang SI (biru tua seperti hero) */
             background-color: var(--untan-blue);
             color: white;
             padding: 50px 0;
         }
         .btn-primary-custom {
-            background-color: #e53935; /* Warna merah sesuai tombol Selengkapnya */
+            background-color: #e53935;
             border-color: #e53935;
         }
         .btn-primary-custom:hover {
@@ -128,10 +126,10 @@
             font-weight: bold;
         }
         .card-custom i {
-            color: var(--untan-orange); /* Panah oranye */
+            color: var(--untan-orange); 
         }
 
-        /* 5. FOOTER (Jika ingin warna biru tua juga) */
+        /* 5. FOOTER */
         footer {
             background-color: var(--untan-blue);
             color: white;
@@ -140,7 +138,7 @@
             margin-top: 50px;
         }
 
-        /* 6. STYLE TAMBAHAN */
+        /* 6. Add style */
         .list-group-item:hover {
             background-color: #f8f9fa;
         }
@@ -151,7 +149,7 @@
             color: var(--untan-blue);
             border-color: var(--untan-blue);
         }
-        /* 7. STYLE UNTUK SAMBUTAN KAPRODI */
+        /* 7. STYLE SAMBUTAN KAPRODI */
         .sambutan-kaprodi {
             background-color: #f8f9fa;
             padding: 40px 0;
@@ -174,7 +172,7 @@
             margin-bottom: 20px;
             font-weight: bold;
         }
-        /* 8. STYLE UNTUK SOCIAL MEDIA YANG DIPERBAIKI */
+        /* 8. STYLE SOCIAL MEDIA */
         .social-media-section {
             background-color: #f8f9fa;
             padding: 60px 0;
@@ -266,9 +264,9 @@
     </style>
 
     <script type="text/babel">
-// ===================================
+
 // ===== KOMPONEN NAVBAR & HERO ======
-// ===================================
+
 function MyNavbar({ currentPage }) {
     const logoUntanUrl = "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjAMo-RoaTtjDuXxkwIW67QARKKQtXhsCZHYx14imGaWRCFVj23crDQP5L588mCAu8GShFksh11m-MZRW05nukYPX2fuBBmqhosszU4xQDHTIpGLFWIlJvPf7DBaYiMix4mQ1M0c_mR-3nB/s2048/Logo-Untan-Universitas-Tanjungpura-PNG.png"; 
     
@@ -292,7 +290,6 @@ function MyNavbar({ currentPage }) {
                         <li className={`nav-item ${isLinkActive('home')}`}>
                             <a className="nav-link" href="#" onClick={() => window.setCurrentPage('home')}>Beranda</a>
                         </li>
-                        {/* BARIS INI DIHAPUS <li className="nav-item"><a className="nav-link" href="#berita">Berita</a></li> */}
                         
                         <li className={`nav-item dropdown ${isLinkActive('visi-misi') || isLinkActive('sejarah') || isLinkActive('dosen') || isLinkActive('struktur') ? 'active' : ''}`}>
                             <a 
@@ -345,23 +342,19 @@ function Hero() {
     return (
         <section className="hero" id="home-header">
             <div className="container">
-                {/* Judul SI Sistem Informasi diganti di Hero */}
                 <h1 className="display-6 fw-bold">S1 Sistem Informasi</h1>
                 <p className="lead">Fakultas Matematika dan Ilmu Pengetahuan Alam</p>
-                {/* Tambahkan gambar hero di sini jika mau */}
-                {/*  */}
             </div>
         </section>
     );
 }
 
-// ===== KOMPONEN TENTANG SI BARU (SESUAI LAYOUT GAMBAR) =====
+// ===== KOMPONEN TENTANG Sistem Informasi=====
 function TentangSI() {
     return (
         <section className="tentang-si" id="tentang-si">
             <div className="container">
                 <div className="row">
-                    {/* Kolom Kiri: Teks dan Tombol */}
                     <div className="col-md-7 mb-4 mb-md-0">
                         <h2 className="display-6 fw-bold mb-4">Tentang Sistem Informasi</h2>
                         <p className="lead">
@@ -370,7 +363,6 @@ function TentangSI() {
                         <a href="#" className="btn btn-primary-custom mt-3">Selengkapnya</a>
                     </div>
                     
-                    {/* Kolom Kanan: Card Tombol */}
                     <div className="col-md-5 d-flex flex-column justify-content-center">
                         <div className="d-grid gap-3">
                         </div>
@@ -381,7 +373,7 @@ function TentangSI() {
     );
 }
 
-// ===== KOMPONEN SAMBUTAN KAPRODI BARU =====
+// ===== Komponen Kata Pengantar Kaprodi =====
 function SambutanKaprodi() {
     return (
         <section className="sambutan-kaprodi">
@@ -412,10 +404,7 @@ function SambutanKaprodi() {
     );
 }
 
-
-// ===================================
-// ===== KOMPONEN UTILITY (CARD, GALERI, DLL) =====
-// ===================================
+// ===== KOMPONEN CARD, GALERI, DLL =====
 
 function KegiatanCard({ judul, deskripsi, tanggal, gambar }) {
     return (
@@ -458,7 +447,7 @@ function Galeri() {
     );
 }
 
-// KOMPONEN MEDIA SOSIAL YANG DIPERBAIKI
+// KOMPONEN MEDIA SOSIAL
 function MediaSosial() {
     const socialMedia = [
         { 
@@ -567,9 +556,7 @@ function Berita() {
     );
 }
 
-// ===================================
 // ===== KOMPONEN HALAMAN PROFIL BARU (SPA) =====
-// ===================================
 
 function HalamanVisiMisi() {
     return (
@@ -585,7 +572,6 @@ function HalamanVisiMisi() {
                         <li className="list-group-item"><a href="#" onClick={() => window.setCurrentPage('sejarah')} className="text-decoration-none text-dark">Sejarah Singkat</a></li>
                         <li className="list-group-item"><a href="#" onClick={() => window.setCurrentPage('struktur')} className="text-decoration-none text-dark">Struktur Organisasi</a></li>
                         <li className="list-group-item"><a href="#" onClick={() => window.setCurrentPage('dosen')} className="text-decoration-none text-dark">Dosen Sistem Informasi</a></li>
-                        {/* Tambahkan link profil lainnya di sini */}
                     </ul>
                 </div>
                 <div className="col-md-9">
@@ -624,7 +610,6 @@ function HalamanKurikulum() {
 }
 
 function MataKuliah() {
-    // Array berisi 8 link foto mata kuliah
     const mataKuliahFoto = [
          "https://sisfo.untan.ac.id/wp-content/uploads/2023/11/1.png",
         "https://sisfo.untan.ac.id/wp-content/uploads/2023/11/2.png",
@@ -642,7 +627,6 @@ function MataKuliah() {
             </div>
             <h2 className="text-primary mb-4">Mata Kuliah Program Studi Sistem Informasi</h2>
             
-            {/* Foto ditampilkan vertikal satu-satu */}
             <div className="row justify-content-center">
                 <div className="col-md-8">
                     {mataKuliahFoto.map((foto, index) => (
@@ -684,7 +668,6 @@ function HalamanKemahasiswaan() {
         <section className="container my-5">
             <h2 className="text-primary mb-4">Kemahasiswaan</h2>
             
-            {/* Kegiatan Kemahasiswaan */}
             <section className="mb-5">
                 <div className="row">
                     <KegiatanCard
@@ -904,18 +887,13 @@ function HalamanProfilLulusan() {
     );
 }
 
-
-// ===================================
-// ===== KOMPONEN UTAMA APP (FIXED) =====
-// ===================================
+// ===== KOMPONEN UTAMA APP =====
 
 function App() {
     // 1. Definisikan state halaman awal
     const [currentPage, setCurrentPage] = React.useState('home');
 
-    // 2. Daftarkan fungsi setCurrentPage ke objek global window (PENTING!)
-    // Ini memungkinkan link di mana saja (termasuk di dalam Dropdown) 
-    // untuk mengubah state App
+    // 2. Daftarkan fungsi setCurrentPage ke objek global window untuk mengubah state App
     React.useEffect(() => {
         window.setCurrentPage = setCurrentPage;
     }, []); 
@@ -960,7 +938,6 @@ function App() {
                 );
         }
     };
-
     return (
         <div>
             {/* Teruskan currentPage sebagai prop agar Navbar bisa tahu link mana yang aktif */}
